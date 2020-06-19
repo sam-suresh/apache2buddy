@@ -321,12 +321,26 @@ sub get_os_platform {
          my @py_scripts = (
                 # platform.linux_distribution() - This function is deprecated since Python 3.5
                 # and removed in Python 3.8. See alternative like the distro package.
-                'import platform; print(platform.linux_distribution())',
+                "try:
+	import platform
+	print(platform.linux_distribution())
+except AttributeError as e:
+	pass",
                 # platform.dist() -  Deprecated since version 2.6.
-                'import platform; print(platform.dist())',
+                "try:
+	import platform
+	print(platform.dist())
+except AttributeError as e:
+	pass",
                 # distro.linux_distribution() - 'distro' is not default installed package
-                'import distro; print(distro.linux_distribution())',
-        );
+                "try:
+	import distro
+	print(distro.linux_distribution())
+except AttributeError as e:
+	pass
+except ModuleNotFoundError as e:
+	pass"); # Note the pass is required because perl needs an empty result for error handling internally switching from python back to perl.
+                # We just want python to die quietly in a corner for aestehetic reasons.
 
         # Check for python (new in Debian 9 as it doesnt come with it out of the box)
         my $py_exists = 0;
@@ -411,7 +425,7 @@ sub check_os_support {
 	my %dsv = map { $_ => 1 } @debian_supported_versions;
 
 	# https://www.ubuntu.com/info/release-end-of-life
-	my @ubuntu_supported_versions = ('16.04','18.04');
+	my @ubuntu_supported_versions = ('16.04','18.04','20.04');
 	my %usv = map { $_ => 1 } @ubuntu_supported_versions;
 
 	if (exists($sol{$distro})) {
@@ -1134,7 +1148,14 @@ sub get_apache_model {
                 # In apache2, worker / prefork / event are no longer compiled-in.
                 # Instead, with is a loaded in module
                 # differing from httpd / httpd24u's process directly, in ubuntu we need to run apache2ctl.
+                if ($VERBOSE) { print "VERBOSE: Looking for model, first trying 'apache2ctl'.\n" }
                 $model = `apache2ctl -M 2>&1 | egrep "worker|prefork|event|itk"`;
+		# see issue #334, apachectl was our fall back but now we need to also fall back to apache2.
+		my @array_models = ('worker','prefork','event','itk'); 
+		if (!(grep $model, @array_models)) { 
+                	if ($VERBOSE) { print "VERBOSE: model not found, falling back to 'apache2', last try...\n" }
+                	$model = `apache2 -M 2>&1 | egrep "worker|prefork|event|itk"`;
+		}
                 # if we detect itk module, we need to stop immediately:
                 if ($VERBOSE) { print "VERBOSE: $model" }
                 if ($VERBOSE) { print "VERBOSE: ITK DETECTTOR STARTED\n" }
@@ -1150,7 +1171,16 @@ sub get_apache_model {
                 if ($VERBOSE) { print "VERBOSE: Return Value: $model\n" }
                 return $model;
         } else {
+                if ($VERBOSE) { print "VERBOSE: Looking for model, first trying 'apachectl'.\n" }
                 $model = `apachectl -M 2>&1 | egrep "worker|prefork|event|itk"`;
+		# Gotcha in Fedora 32  - so likely to appear in later versions of apache (circa 2.4.43)
+		# see issue #334, apachectl was our fall back but now we need to also fall back to httpd.
+		my @array_models = ('worker','prefork','event','itk'); 
+		if (!(grep $model, @array_models)) { 
+                	if ($VERBOSE) { print "VERBOSE: model not found, falling back to 'httpd', last try...\n" }
+                	$model = `httpd -M 2>&1 | egrep "worker|prefork|event|itk"`;
+		}
+		our $model;
                 if ($VERBOSE) { print "VERBOSE: $model" }
                 if ($VERBOSE) { print "VERBOSE: ITK DETECTOR STARTED\n" }
                 itk_detect($model);
