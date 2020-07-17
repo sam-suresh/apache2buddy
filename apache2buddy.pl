@@ -528,6 +528,24 @@ sub systemcheck_large_logs {
 	# silently proceed if the folder doesnt exist
 }
 
+sub files_in_array_that_exist_and_are_readable {
+  # takes an array of filenames as argument, filters out files that may cause an exception later on.
+  # see issue #347
+  my @in_array = @_;
+  # Lets programatically rip through the array and work out which
+  # ones exist and put those in a new array.
+  my @out_array;
+  foreach my $file(@in_array) {
+    chomp($file);
+    # if the file exists, and we have permission to read it ( and we should, we are root after all if we got this far)
+    if ( -f $file && -r $file) {
+      push(@out_array,$file)
+    }
+  }
+  return @out_array;
+}
+
+
 # here we're going to build a list of the files included by the Apache 
 # configuration
 sub build_list_of_files {
@@ -545,7 +563,7 @@ sub build_list_of_files {
 	# to include
 	push(@master_list,$base_apache_config);
 
-	# put the main configuratino file into the list of files we need to 
+	# put the main configuration file into the list of files we need to 
 	# search for include lines
 	push(@find_includes_in,$base_apache_config);
 	
@@ -571,7 +589,7 @@ sub build_config_array {
 	# to include
 	push(@master_list,$base_apache_config);
 
-	# put the main configuratino file into the list of files we need to 
+	# put the main configuration file into the list of files we need to 
 	# search for include lines
 	push(@find_includes_in,$base_apache_config);
 
@@ -650,15 +668,18 @@ sub find_included_files {
 					# expand it and add the files
 					# to the list
 					my @new_includes = expand_included_files(\@include_files, $glob, $apache_root);
-					push(@$master_list,@new_includes);
-					push(@$find_includes_in,@new_includes);
+                                        my @sane_includes = files_in_array_that_exist_and_are_readable(@new_includes);
+					push(@$master_list,@sane_includes);
+					push(@$find_includes_in,@sane_includes);
 				}
 				else {
 					# if it is not a glob, push the 
 					# line into the configuration 
 					# array
 					push(@$master_list,$_);
+                                        @$master_list = files_in_array_that_exist_and_are_readable(@$master_list);
 					push(@$find_includes_in,$_);
+                                        @$find_includes_in = files_in_array_that_exist_and_are_readable(@$find_includes_in);
 				}
 			}
 			# This extra bit of code is required for apache 2.4's new directive "IncludeOptional"
@@ -691,15 +712,18 @@ sub find_included_files {
 					# expand it and add the files
 					# to the list
 					my @new_includes = expand_included_files(\@include_files, $glob, $apache_root);
-					push(@$master_list,@new_includes);
-					push(@$find_includes_in,@new_includes);
+                                        my @sane_includes = files_in_array_that_exist_and_are_readable(@new_includes);
+					push(@$master_list,@sane_includes);
+					push(@$find_includes_in,@sane_includes);
 				}
 				else {
 					# if it is not a glob, push the 
 					# line into the configuration 
 					# array
 					push(@$master_list,$_);
+                                        @$master_list = files_in_array_that_exist_and_are_readable(@$master_list);
 					push(@$find_includes_in,$_);
+                                        @$find_includes_in = files_in_array_that_exist_and_are_readable(@$find_includes_in);
 				}
 			}
 		}
@@ -712,6 +736,7 @@ sub find_included_files {
 	}
 
 	# return the config array with the included files attached
+	@master_config_array = files_in_array_that_exist_and_are_readable(@master_config_array);
 	return @master_config_array;
 }
 
@@ -1852,6 +1877,16 @@ sub preflight_checks {
         # account for 'apache\x{d}' strangeness
         $apache_user_config =~ s/\x{d}//;
         $apache_user_config =~ s/^\s*(.*?)\s*$/$1/;; # address issue #19, strip whitespace from both sides.
+        # issue #348 sanity check for NOT FOUND on ubuntu systems
+        if ($apache_user_config eq "CONFIG NOT FOUND") {
+		if ($VERBOSE) { print "VERBOSE: Checking for envvarsfile to get apache_config_user on ubuntu systems.\n" }
+		if ( -f "/etc/apache2/envvars" && -r "/etc/apache2/envvars") {
+			 if ($VERBOSE) { print "VERBOSE: /etc/apache2/envvars exists and is readable, checking value of APACHE_RUN_USER...\n" } 
+			 $apache_user_config = `grep 'export APACHE_RUN_USER=' /etc/apache2/envvars | awk -F"=" '{print \$2}'`;
+			 chomp($apache_user_config);
+			 $apache_user_config =~ s/^\s*(.*?)\s*$/$1/;; # address issue #19, strip whitespace from both sides.
+		}
+	}  
 	unless ($apache_user_config eq "apache" or $apache_user_config eq "www-data") {
                 my $apache_config_userid = `id -u $apache_user_config`;
                 chomp($apache_config_userid);
