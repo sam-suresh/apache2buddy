@@ -1311,22 +1311,21 @@ sub get_php_setting {
 		# try to find the apache2 one
 		if ( -f "/etc/php5/apache2/php.ini" ) {
 			our $real_config = "/etc/php5/apache2/php.ini";
-		} elsif ( -f "/etc/php/7.0/apache2/php.ini") {
-			our $real_config = "/etc/php/7.0/apache2/php.ini";
-		} elsif ( -f "/etc/php/7.0/fpm/php.ini") {
-			our $real_config = "/etc/php/7.0/fpm/php.ini";
-		} elsif ( -f "/etc/php/7.1/apache2/php.ini") {
-                        our $real_config = "/etc/php/7.1/apache2/php.ini";
-		} elsif ( -f "/etc/php/7.1/fpm/php.ini") {
-			our $real_config = "/etc/php/7.1/fpm/php.ini";
-                } elsif ( -f "/etc/php/7.2/apache2/php.ini") {
-                        our $real_config = "/etc/php/7.2/apache2/php.ini";
-		} elsif ( -f "/etc/php/7.2/fpm/php.ini") {
-			our $real_config = "/etc/php/7.2/fpm/php.ini";
-		} elsif ( -f "/etc/php/7.3/apache2/php.ini") {
-			our $real_config = "/etc/php/7.3/apache2/php.ini";
-		} elsif ( -f "/etc/php/7.3/fpm/php.ini") {
-			our $real_config = "/etc/php/7.3/fpm/php.ini";
+		} else {
+			# looking for /etc/php/*/apache2/php.ini
+			my @files = glob "/etc/php/*/apache2/php.ini";
+			
+			if (@files != 1) {
+				# looking for /etc/php/*/fpm/php.ini
+				my @files = glob "/etc/php/*/fpm/php.ini";
+			
+                                # This block should never be hit.
+				if (@files != 1) {
+					our $real_config = "Not Found.";
+			        }
+			} else {
+				our $real_config = @files[0];
+			}
 		}
 
 		our $real_config;

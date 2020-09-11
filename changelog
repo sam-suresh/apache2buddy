@@ -2,6 +2,9 @@ CHANGELOG
 
 When		Who		What
 ======================================================================================
+2020-09-09	Richard Forth   Address issue #355
+                                Made a change to how debian/ubuntu php.ini is
+				located to make it more future proof.
 2020-07-21	Richard Forth   Address issue #351
                                 - Fixed applied to patch a break introduced in #347.
 				Caused the entire config to be empty.
