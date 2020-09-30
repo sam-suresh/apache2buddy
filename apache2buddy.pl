@@ -1450,10 +1450,10 @@ sub generate_standard_report {
 				if ( ! $NOOK ) { show_shortok_box(); print "\t${GREEN}Your MaxClients setting is within an acceptable range.${ENDC}\n" } 
 			}
 			if ( our $apache_version =~ m/.*\s*\/2.4.*/) {
-				printf ("${YELLOW}%-75s${ENDC} %-38s\n", "\tYour recommended MaxRequestWorkers setting (based on available memory) is between $min_rec_maxclients and $max_rec_maxclients${ENDC}.", "<------- Acceptable Range (10% of MAX)");
+				printf ("${YELLOW}%-75s${ENDC} %-38s\n", "\tYour recommended MaxRequestWorkers setting (based on available memory) is between $min_rec_maxclients and $max_rec_maxclients${ENDC}.", "<-- Acceptable Range (90-100% of Remaining RAM)");
 				if ( $vhost_count >= $max_rec_maxclients ) { show_crit_box(); print "\t${RED}Vhost count exceeds recommended MaxRequestWorkers limits!${ENDC}\n"}
 			} else {
-				printf ("${YELLOW}%-75s${ENDC} %-38s\n", "\tYour recommended MaxClients setting (based on available memory) is between $min_rec_maxclients and $max_rec_maxclients${ENDC}.", "<------- Acceptable Range (10% of MAX)");
+				printf ("${YELLOW}%-75s${ENDC} %-38s\n", "\tYour recommended MaxClients setting (based on available memory) is between $min_rec_maxclients and $max_rec_maxclients${ENDC}.", "<-- Acceptable Range (90-100% of Remaining RAM)");
 				if ( $vhost_count >= $max_rec_maxclients ) { show_crit_box(); print "${RED}Vhost count exceeds recommended MaxClients limits!${ENDC}\n"}
 			}
 			printf ("%-62s ${CYAN}%d %2s${ENDC}\n", "\tMax potential memory usage:", $max_potential_usage, "MB");  # exempt from NOINFO directive.
@@ -1466,10 +1466,10 @@ sub generate_standard_report {
 				show_crit_box(); print "\t${RED}Your MaxClients setting is too low.${ENDC}\n"; # exempt from NOINFO directive.
 			}
 			if ( our $apache_version =~ m/.*\s*\/2.4.*/) {
-				printf ("${YELLOW}%-75s${ENDC} %-38s\n", "\tYour recommended MaxRequestWorkers setting is between $min_rec_maxclients and $max_rec_maxclients${ENDC}.", "<------- Acceptable Range (10% of MAX)");
+				printf ("${YELLOW}%-75s${ENDC} %-38s\n", "\tYour recommended MaxRequestWorkers setting is between $min_rec_maxclients and $max_rec_maxclients${ENDC}.", "<-- Acceptable Range (90-100% of Remaining RAM)");
 				if ( $vhost_count >= $max_rec_maxclients ) { show_crit_box(); print "${RED}Vhost count exceeds recommended MaxRequestWorkers limits!${ENDC}\n"}
 			} else {
-				printf ("${YELLOW}%-75s${ENDC} %-38s\n", "\tYour recommended MaxClients setting (based on available memory) is between $min_rec_maxclients and $max_rec_maxclients${ENDC}.", "<------- Acceptable Range (10% of MAX)");
+				printf ("${YELLOW}%-75s${ENDC} %-38s\n", "\tYour recommended MaxClients setting (based on available memory) is between $min_rec_maxclients and $max_rec_maxclients${ENDC}.", "<-- Acceptable Range (90-100% of Remaining RAM)");
 				if ( $vhost_count >= $max_rec_maxclients ) { show_crit_box(); print "${RED}Vhost count exceeds recommended MaxClients limits!${ENDC}\n"}
 			}
 			printf ("%-62s ${CYAN}%d %2s${ENDC}\n", "\tMax potential memory usage:", $max_potential_usage, "MB");  # exempt from NOINFO directive.
@@ -1482,10 +1482,10 @@ sub generate_standard_report {
 				show_crit_box(); print "\t${RED}Your MaxClients setting is too high.${ENDC}\n"; # exempt from NOINFO directive.
 			}
 			if ( our $apache_version =~ m/.*\s*\/2.4.*/) {
-				printf ("${YELLOW}%-75s${ENDC} %-38s\n", "\tYour recommended MaxRequestWorkers setting (based on available memory) is between $min_rec_maxclients and $max_rec_maxclients${ENDC}.", "<------- Acceptable Range (10% of MAX)");
+				printf ("${YELLOW}%-75s${ENDC} %-38s\n", "\tYour recommended MaxRequestWorkers setting (based on available memory) is between $min_rec_maxclients and $max_rec_maxclients${ENDC}.", "<-- Acceptable Range (90-100% of Remaining RAM)");
 				if ( $vhost_count >= $max_rec_maxclients ) { show_crit_box(); print "${RED}Vhost count exceeds recommended MaxRequestWorkers limits!${ENDC}\n"}
 			} else {
-				printf ("${YELLOW}%-75s${ENDC} %-38s\n", "\tYour recommended MaxClients setting (based on available memory) is between $min_rec_maxclients and $max_rec_maxclients${ENDC}.", "<------- Acceptable Range (10% of MAX)");
+				printf ("${YELLOW}%-75s${ENDC} %-38s\n", "\tYour recommended MaxClients setting (based on available memory) is between $min_rec_maxclients and $max_rec_maxclients${ENDC}.", "<-- Acceptable Range (90-100% of Remaining RAM)");
 				if ( $vhost_count >= $max_rec_maxclients ) { show_crit_box(); print "${RED}Vhost count exceeds recommended MaxClients limits!${ENDC}\n"}
 			}
 			printf ("%-62s ${RED}%d %2s${ENDC}\n", "\tMax potential memory usage:", $max_potential_usage, "MB");  # exempt from NOINFO directive.
