@@ -1591,7 +1591,7 @@ sub show_shortok_box {
 
 sub show_important_message {
 	if ( ! $NOINFO ) {
-		print "\n${YELLOW}** IMPORTANT MESSAGE **\nImportant messages go here.${ENDC}\n";
+		print "\n${RED}** IMPORTANT MESSAGE **\n\napache2buddy is not a troubleshooting tool.\nDo not use it to try and determine why your site\nwent down or why it was slow.\n\nPerform some proper investigations first, and\nonly if you found that you were hitting the\nMaxRequestWorkers limit, or if your server was\nrunning out of memory (primarily due to\nexcessive memory usage by Apache), should you\nrun this script and refer to its output..${ENDC}\n";
 	}
 }
 
@@ -2869,4 +2869,4 @@ if ( $model eq "worker") {
 
 generate_standard_report($available_mem, $maxclients, $vhost_count, $apache_proc_lowest, $apache_proc_average, $apache_proc_highest, $model, $uptime, $threadsperchild, $mysql_memory_usage_mbytes, $java_memory_usage_mbytes, $redis_memory_usage_mbytes, $memcache_memory_usage_mbytes, $varnish_memory_usage_mbytes, $phpfpm_memory_usage_mbytes, $gluster_memory_usage_mbytes);
 
-#show_important_message();
+show_important_message();
