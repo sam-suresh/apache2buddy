@@ -1591,7 +1591,7 @@ sub show_shortok_box {
 
 sub show_important_message {
 	if ( ! $NOINFO ) {
-		print "\n${RED}** IMPORTANT MESSAGE **\n\napache2buddy is not a troubleshooting tool.\nDo not use it to try and determine why\nyour site went down or why it\nwas slow.\n\nPerform some proper investigations first,\nand only if you found that you were hitting\nthe MaxRequestWorkers limit, or if your\nserver was running out of\nmemory (primarily due to excessive memory usage by Apache),\nshould you run this script and refer to its output..${ENDC}\n";
+		print "\n${RED}** IMPORTANT MESSAGE **\n\napache2buddy is not a troubleshooting tool.\nDo not use it to try and determine why your site\nwent down or why it was slow.\n\nPerform some proper investigations first, and\nonly if you found that you were hitting the\nMaxRequestWorkers limit, or if your server was\nrunning out of memory (primarily due to\nexcessive memory usage by Apache), should you\nrun this script and refer to its output..${ENDC}\n";
 	}
 }
 
