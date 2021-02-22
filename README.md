@@ -2,7 +2,24 @@
 
 ## old method:
 
-	# curl -sL apache2buddy.pl | perl
+	# curl -sL ***redacted*** | perl
+
+
+## ** DOMAIN EXPIRY NOTICE **
+
+	There is no intention of renewing the domain:
+
+        	apache2buddy.pl
+
+	Please use extreme caution! Running arbirary
+	code as root is high risk and the domain
+	will not be associated with this code.
+
+	We took steps in 2018 to move the code to
+	github exclusively and have it run  from
+	there directly with curl and perl.
+
+
 
 ## new method:
 
@@ -19,7 +36,7 @@
 	For security reasons, the following 
 	execution method will bring you to this page:
 	
-	  # curl -sL apache2buddy.pl | perl
+	  # curl -sL ***redacted*** | perl
 	
 	Instead please run / bookmark the following:
 	
