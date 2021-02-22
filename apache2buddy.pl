@@ -458,7 +458,7 @@ sub check_os_support {
 				exit;
 			}
 		} elsif (exists($rol{$distro})) {
-			# for red hat versions is not so clinical regarding the specific versions, however we need to be mindful of EOL versions eg RHEL 3, 4, 5
+			# for red hat versions is not so clinical regarding the specific versions, however we need to be mindful of EOL versions eg RHEL 3, 4, 5, 6
 			# get major version from version string. note that redhatm centos and scientifc are al rebuilds of the same sources, variables therefore
 			# use the generic 'redhat' reference.
 			if ( $VERBOSE ) { print "VERBOSE -> RedHat Version: ". $version . "\n"}
@@ -1591,7 +1591,7 @@ sub show_shortok_box {
 
 sub show_important_message {
 	if ( ! $NOINFO ) {
-		print "\n${RED}** IMPORTANT MESSAGE **\n\napache2buddy is not a troubleshooting tool.\nDo not use it to try and determine why your site\nwent down or why it was slow.\n\nPerform some proper investigations first, and\nonly if you found that you were hitting the\nMaxRequestWorkers limit, or if your server was\nrunning out of memory (primarily due to\nexcessive memory usage by Apache), should you\nrun this script and refer to its output..${ENDC}\n";
+		print "\n${RED}** IMPORTANT MESSAGE **\n\napache2buddy is not a troubleshooting tool.\nDo not use it to try and determine why your site\nwent down or why it was slow.\n\nPerform some proper investigations first, and\nonly if you found that you were hitting the\nMaxRequestWorkers limit, or if your server was\nrunning out of memory (primarily due to\nexcessive memory usage by Apache), should you\nrun this script and refer to its output..\n\n** DOMAIN EXPIRY NOTICE **\n\nThere is no intention of renewing the domain: \n\n\tapache2buddy.pl\n\nPlease use extreme caution! Running arbirary\ncode as root is high risk and the domain\nwill not be associated with this code.\n\nWe took steps in 2018 to move the code to\ngithub exclusively and have it run from\nthere directly with curl and perl.${ENDC}\n";
 	}
 }
 
@@ -2076,8 +2076,8 @@ sub preflight_checks {
 	}
 	our $threadsperchild;
 	if ($model eq "worker" || $model eq "event" ) {
-		if ( ! $NOINFO ) { show_info_box(); print "Your ThreadsPerChild setting for worker MPM is  ".$threadsperchild."\n" }
-		if ( ! $NOINFO ) { show_info_box(); print "Your ServerLimit setting for worker MPM is  ".$serverlimit."\n" }
+		if ( ! $NOINFO ) { show_info_box(); print "Your ThreadsPerChild setting for worker/event MPM is  ".$threadsperchild."\n" }
+		if ( ! $NOINFO ) { show_info_box(); print "Your ServerLimit setting for worker/event MPM is  ".$serverlimit."\n" }
 	}
 
 	# Check 16
