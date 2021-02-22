@@ -117,7 +117,7 @@ Any attempts going forward to curl and perl the domain, will give you the landin
 
 First of all I am just a dude, with a github acount and enough money to keep one domain going. I don't have infinite wealth,
 so buying up all the different likely typo'ed versions of my domain, is impossible.  This is a concern if you are curling 
-and perling a domain, as root. can you see the problem if you ran "curl -sL apach2buddy.pl | perl" ? 
+and perling a domain, as root. can you see the problem if you ran "curl -sL ***redacted*** | perl" ? 
 
 Typo campers COULD take advantange of this and register a domain that is close to mine, in the vague hope of a typo that results
 in you hitting their site instead of mine, and what if THAT site contained a very malicious perl script?
