@@ -2,7 +2,24 @@
 
 ## old method:
 
-	# curl -sL apache2buddy.pl | perl
+	# curl -sL ***redacted*** | perl
+
+
+## ** DOMAIN EXPIRY NOTICE **
+
+	There is no intention of renewing the domain:
+
+        	apache2buddy.pl
+
+	Please use extreme caution! Running arbirary
+	code as root is high risk and the domain
+	will not be associated with this code.
+
+	We took steps in 2018 to move the code to
+	github exclusively and have it run  from
+	there directly with curl and perl.
+
+
 
 ## new method:
 
@@ -19,7 +36,7 @@
 	For security reasons, the following 
 	execution method will bring you to this page:
 	
-	  # curl -sL apache2buddy.pl | perl
+	  # curl -sL ***redacted*** | perl
 	
 	Instead please run / bookmark the following:
 	
@@ -100,7 +117,7 @@ Any attempts going forward to curl and perl the domain, will give you the landin
 
 First of all I am just a dude, with a github acount and enough money to keep one domain going. I don't have infinite wealth,
 so buying up all the different likely typo'ed versions of my domain, is impossible.  This is a concern if you are curling 
-and perling a domain, as root. can you see the problem if you ran "curl -sL apach2buddy.pl | perl" ? 
+and perling a domain, as root. can you see the problem if you ran "curl -sL ***redacted*** | perl" ? 
 
 Typo campers COULD take advantange of this and register a domain that is close to mine, in the vague hope of a typo that results
 in you hitting their site instead of mine, and what if THAT site contained a very malicious perl script?
