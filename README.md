@@ -103,7 +103,7 @@ so buying up all the different likely typo'ed versions of my domain, is impossib
 and perling a domain, as root. can you see the problem if you ran "curl -sL apach2buddy.pl | perl" ? 
 
 Typo campers COULD take advantange of this and register a domain that is close to mine, in the vague hope of a typo that results
-in you hitting their site istead of mine, and what if THAT site contained a very malicious perl script?
+in you hitting their site instead of mine, and what if THAT site contained a very malicious perl script?
 
 thats typocamping in a nutshell, and, for that reason, I want to stop using the domain, and phase it out.
 
