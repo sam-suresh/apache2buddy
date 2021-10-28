@@ -397,7 +397,7 @@ sub check_os_support {
 				'ubuntu',
 				'Debian',
 				'debian',
-                                'Debian GNU/Linux',
+				'Debian GNU/Linux',
 				'Red Hat Enterprise Linux',
 				'Red Hat Enterprise Linux Server',
 				'redhat',
