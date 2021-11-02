@@ -2,6 +2,7 @@ CHANGELOG
 
 When		Who		What
 ======================================================================================
+2021-10-28	w4zu            Add support for Debian 11
 2021-02-22	Richard Forth   Added an important message about
 				Domain expiry and non renewal, and the risks
 				and mitigations that were previously put in
