@@ -1096,7 +1096,7 @@ sub get_apache_root {
 	our $apache_root;
 	# use the identified Apache binary to figure out where the root directory is 
 	# for the Apache instance
-	if ( $process_name eq "/usr/sbin/apache2") {
+	if ( $process_name eq "/etc/apache-sp") {
 		# use apache2ctl instead ...
 		$apache_root = `apache2ctl -V 2>&1 | grep \"HTTPD_ROOT\"`;
 		$apache_root =~ s/.*=\"(.*)\"/$1/;
@@ -1118,7 +1118,7 @@ sub get_apache_root {
 sub get_apache_conf_file {
 	our $apache_conf_file;
 	my ( $process_name ) = @_;
-	if ( $process_name eq "/usr/sbin/apache2") {
+	if ( $process_name eq "/etc/apache-sp") {
 		# use apache2ctl instead ...
 		$apache_conf_file = `apache2ctl -V 2>&1 | grep \"SERVER_CONFIG_FILE\"`;
 		$apache_conf_file =~ s/.*=\"(.*)\"/$1/;
@@ -1140,7 +1140,7 @@ sub get_apache_conf_file {
 sub get_apache_pid_file {
 	our $apache_pid_file;
 	my ( $process_name ) = @_;
-	if ( $process_name eq "/usr/sbin/apache2") {
+	if ( $process_name eq "/etc/apache-sp") {
 		# use apache2ctl instead ...
 		$apache_pid_file = `apache2ctl -V 2>&1 | grep \"DEFAULT_PIDLOG\"`;
 		$apache_pid_file =~ s/.*=\"(.*)\"/$1/;
@@ -1172,7 +1172,7 @@ sub itk_detect {
 sub get_apache_model {
         our $model;
         my ( $process_name ) = @_;
-        if ( $process_name eq "/usr/sbin/apache2") {
+        if ( $process_name eq "/etc/apache-sp") {
                 # In apache2, worker / prefork / event are no longer compiled-in.
                 # Instead, with is a loaded in module
                 # differing from httpd / httpd24u's process directly, in ubuntu we need to run apache2ctl.
@@ -1235,7 +1235,7 @@ sub get_apache_version {
 		$version = `LANGUAGE=en_GB.UTF-8 $process_name -V 2>&1 | grep "Server version"`;
 		chomp($version);
 		$version =~ s/.*:\s(.*)$/$1/;
-	} elsif ( $process_name eq '/usr/sbin/apache2' ) { 
+	} elsif ( $process_name eq '/etc/apache-sp' ) { 
 		# ubuntu has to be different, so...
                 $version = `LANGUAGE=en_GB.UTF-8 /usr/sbin/apache2ctl -V 2>&1 | grep "Server version"`;
                 chomp($version);
